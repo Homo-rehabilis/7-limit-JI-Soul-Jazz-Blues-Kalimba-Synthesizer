@@ -99,15 +99,27 @@
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContextClass();
+
+        // 1. スマホの歪みを防ぐハイパスフィルター（120Hz以下をカット）
+        const hpf = audioCtx.createBiquadFilter();
+        hpf.type = 'highpass';
+        hpf.frequency.setValueAtTime(120, audioCtx.currentTime);
+
+        // 2. 音割れを防ぐソフトコンプレッサー
         compressor = audioCtx.createDynamicsCompressor();
-        compressor.threshold.setValueAtTime(-3.0, audioCtx.currentTime);
-        compressor.knee.setValueAtTime(0, audioCtx.currentTime);
-        compressor.ratio.setValueAtTime(20, audioCtx.currentTime);
-        compressor.attack.setValueAtTime(0.003, audioCtx.currentTime);
-        compressor.release.setValueAtTime(0.08, audioCtx.currentTime);
+        compressor.threshold.setValueAtTime(-12.0, audioCtx.currentTime); // マージンを広く確保
+        compressor.knee.setValueAtTime(10, audioCtx.currentTime);
+        compressor.ratio.setValueAtTime(6, audioCtx.currentTime);        // 自然な圧縮に緩和
+        compressor.attack.setValueAtTime(0.005, audioCtx.currentTime);
+        compressor.release.setValueAtTime(0.1, audioCtx.currentTime);
+
+        // 3. マスターゲインを下げてヘッドルームを作る（0.35 -> 0.20）
         masterGain = audioCtx.createGain();
-        masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
-        compressor.connect(masterGain);
+        masterGain.gain.setValueAtTime(0.20, audioCtx.currentTime);
+
+        // 接続ルーティング
+        compressor.connect(hpf);
+        hpf.connect(masterGain);
         masterGain.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') audioCtx.resume();
