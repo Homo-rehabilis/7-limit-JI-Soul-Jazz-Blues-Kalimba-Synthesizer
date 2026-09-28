@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7-Limit JI Soul Jazz Blues Kalimba</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #000000; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
+    .app-card { background-color: #12141a; border: 1px solid #1e222d; border-radius: 24px; padding: 24px; width: 100%; max-width: 480px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .title-group h1 { font-size: 1.25rem; font-weight: 700; color: #ffffff; line-height: 1.2; margin-bottom: 4px; }
+    .title-group p { font-size: 0.8rem; color: #8a919e; font-style: italic; }
+    .tonic-badge { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 6px 14px; display: flex; gap: 8px; align-items: center; font-family: ui-monospace, SFMono-Regular, monospace; }
+    .tonic-badge .col-left { display: flex; flex-direction: column; font-size: 0.75rem; color: #94a3b8; }
+    .tonic-badge .col-right { display: flex; flex-direction: column; font-size: 0.85rem; font-weight: 700; color: #38bdf8; }
+    .telemetry-card { background-color: #1a1d26; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .tel-item { display: flex; flex-direction: column; }
+    .tel-label { font-size: 0.65rem; font-weight: 700; color: #6b7280; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .tel-value { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.95rem; font-weight: 600; color: #f3f4f6; }
+    .stage-card { background-color: #1a1d26; border-radius: 16px; padding: 16px 12px 20px; margin-bottom: 20px; }
+    .key-headers { display: flex; justify-content: space-between; padding: 0 4px; margin-bottom: 8px; }
+    .key-header-item { flex: 1; text-align: center; font-size: 0.7rem; color: #8a919e; }
+    .tines-container { position: relative; height: 220px; display: flex; justify-content: space-between; align-items: flex-start; padding-top: 12px; }
+    .bridge-bar { position: absolute; top: 0; left: 0; right: 0; height: 10px; background: linear-gradient(180deg, #4a2e1b 0%, #2a180e 100%); border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); z-index: 1; }
+    .tine-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+    .tine { width: 22px; background: linear-gradient(180deg, #4b5263 0%, #2b2f3a 100%); border-radius: 0 0 11px 11px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; transition: all 0.08s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.4); user-select: none; }
+    .tine-wrapper[data-index="5"] .tine { background: linear-gradient(180deg, #5b6294 0%, #3a3f66 100%); }
+    .tine-wrapper.active .tine { background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%) !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.8) !important; transform: translateY(4px); }
+    .tine-circle { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #ffffff; }
+    .tine-ratio-text { font-size: 0.75rem; font-weight: 600; color: #d1d5db; margin-top: 8px; }
+    .tine-wrapper[data-index="1"] .tine { height: 110px; }
+    .tine-wrapper[data-index="2"] .tine { height: 140px; }
+    .tine-wrapper[data-index="3"] .tine { height: 155px; }
+    .tine-wrapper[data-index="4"] .tine { height: 185px; }
+    .tine-wrapper[data-index="5"] .tine { height: 200px; }
+    .tine-wrapper[data-index="6"] .tine { height: 165px; }
+    .tine-wrapper[data-index="7"] .tine { height: 145px; }
+    .tine-wrapper[data-index="8"] .tine { height: 125px; }
+    .presets-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .presets-label { font-size: 0.8rem; color: #9ca3af; }
+    .presets-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+    .preset-btn { background-color: #1a1d26; border: 1px solid #2e3545; color: #e5e7eb; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.15s ease; }
+    .preset-btn:hover { background-color: #262b38; border-color: #4b5563; }
+    .preset-btn.active { background-color: rgba(37, 99, 235, 0.2); border-color: #3b82f6; color: #60a5fa; }
+  </style>
+</head>
+<body>
+  <div class="app-card">
+    <div class="header">
+      <div class="title-group">
+        <h1>7-Limit JI Soul Jazz Blues<br>Kalimba</h1>
+        <p>Just Intonation Ratio Explorer & Sound Engine</p>
+      </div>
+      <div class="tonic-badge">
+        <div class="col-left"><span>Tonic</span><span>⑤:</span></div>
+        <div class="col-right"><span>417.6</span><span>Hz</span></div>
+      </div>
+    </div>
+    <div class="telemetry-card">
+      <div class="tel-item"><span class="tel-label">LAST PLUCKED</span><span class="tel-value" id="valLastPlucked">② (14/9 • 649.60 Hz)</span></div>
+      <div class="tel-item"><span class="tel-label">JI RATIO / CENTS</span><span class="tel-value" id="valRatioCents">14/9 (+764.9 cents)</span></div>
+      <div class="tel-item"><span class="tel-label">HARMONIC INTERVAL</span><span class="tel-value" id="valInterval">⑥ → ② (266.9¢ diff)</span></div>
+    </div>
+    <div class="stage-card">
+      <div class="key-headers">
+        <span class="key-header-item">Key 1</span><span class="key-header-item">Key 2</span><span class="key-header-item">Key 3</span><span class="key-header-item">Key 4</span><span class="key-header-item">Key 5</span><span class="key-header-item">Key 6</span><span class="key-header-item">Key 7</span><span class="key-header-item">Key 8</span>
+      </div>
+      <div class="tines-container">
+        <div class="bridge-bar"></div>
+        <div id="tinesWrapper" style="display: flex; width: 100%; justify-content: space-between;"></div>
+      </div>
+    </div>
+    <div class="presets-section">
+      <span class="presets-label">Chord Presets:</span>
+      <div class="presets-grid" id="presetButtons">
+        <button class="preset-btn" data-chord="i7">I7 Blues</button>
+        <button class="preset-btn" data-chord="iv">IV Subminor</button>
+        <button class="preset-btn active" data-chord="ii">II Minor</button>
+        <button class="preset-btn" data-chord="bv">♭V Septimal</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tinesData = [
+      { id: '①', index: 1, ratio: '2/1', freq: 835.20, key: '1', cents: 1200.0 },
+      { id: '②', index: 2, ratio: '14/9', freq: 649.60, key: '2', cents: 764.9 },
+      { id: '③', index: 3, ratio: '7/5', freq: 584.64, key: '3', cents: 582.5 },
+      { id: '④', index: 4, ratio: '10/9', freq: 464.00, key: '4', cents: 182.4 },
+      { id: '⑤', index: 5, ratio: '1/1', freq: 417.60, key: '5', cents: 0.0 },
+      { id: '⑥', index: 6, ratio: '4/3', freq: 556.80, key: '6', cents: 498.0 },
+      { id: '⑦', index: 7, ratio: '3/2', freq: 626.40, key: '7', cents: 702.0 },
+      { id: '⑧', index: 8, ratio: '7/4', freq: 730.80, key: '8', cents: 968.8 }
+    ];
+    const chords = { i7: [5, 3, 7, 8], iv: [6, 4, 5, 2], ii: [4, 6, 7, 1], bv: [3, 8, 5, 2] };
+    let audioCtx = null, masterGain = null, compressor = null;
+    let lastTine = tinesData.find(t => t.index === 6), currentTine = tinesData.find(t => t.index === 2);
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+        compressor = audioCtx.createDynamicsCompressor();
+        compressor.threshold.setValueAtTime(-3.0, audioCtx.currentTime);
+        compressor.knee.setValueAtTime(0, audioCtx.currentTime);
+        compressor.ratio.setValueAtTime(20, audioCtx.currentTime);
+        compressor.attack.setValueAtTime(0.003, audioCtx.currentTime);
+        compressor.release.setValueAtTime(0.08, audioCtx.currentTime);
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        compressor.connect(masterGain);
+        masterGain.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+    function playTone(freq) {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const osc1 = audioCtx.createOscillator(), gain1 = audioCtx.createGain();
+      osc1.type = 'sine'; osc1.frequency.setValueAtTime(freq, now);
+      gain1.gain.setValueAtTime(0.5, now); gain1.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+      const osc2 = audioCtx.createOscillator(), gain2 = audioCtx.createGain();
+      osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq * 2.756, now);
+      gain2.gain.setValueAtTime(0.2, now); gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+      const bufferSize = audioCtx.sampleRate * 0.012, buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate), data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.setValueAtTime(1200, now);
+      const noiseGain = audioCtx.createGain(); noiseGain.gain.setValueAtTime(0.12, now); noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
+      osc1.connect(gain1); osc2.connect(gain2); noise.connect(filter); filter.connect(noiseGain);
+      gain1.connect(compressor); gain2.connect(compressor); noiseGain.connect(compressor);
+      osc1.start(now); osc2.start(now); noise.start(now);
+      osc1.stop(now + 2.6); osc2.stop(now + 0.4); noise.stop(now + 0.02);
+    }
+    const valLastPlucked = document.getElementById('valLastPlucked'), valRatioCents = document.getElementById('valRatioCents'), valInterval = document.getElementById('valInterval'), tinesWrapper = document.getElementById('tinesWrapper');
+    function triggerTine(tineObj) {
+      playTone(tineObj.freq);
+      if (currentTine.index !== tineObj.index) { lastTine = currentTine; currentTine = tineObj; }
+      valLastPlucked.textContent = `${tineObj.id} (${tineObj.ratio} • ${tineObj.freq.toFixed(2)} Hz)`;
+      valRatioCents.textContent = `${tineObj.ratio} (+${tineObj.cents.toFixed(1)} cents)`;
+      const diffCents = Math.abs(currentTine.cents - lastTine.cents).toFixed(1);
+      valInterval.textContent = `${lastTine.id} → ${currentTine.id} (${diffCents}¢ diff)`;
+      const el = document.querySelector(`.tine-wrapper[data-index="${tineObj.index}"]`);
+      if (el) { el.classList.add('active'); setTimeout(() => el.classList.remove('active'), 150); }
+    }
+    tinesData.forEach(tine => {
+      const wrapper = document.createElement('div'); wrapper.className = 'tine-wrapper'; wrapper.dataset.index = tine.index;
+      wrapper.innerHTML = `<div class="tine"><div class="tine-circle">${tine.id}</div></div><span class="tine-ratio-text">${tine.ratio}</span>`;
+      const onPluck = (e) => { e.preventDefault(); triggerTine(tine); };
+      wrapper.addEventListener('mousedown', onPluck); wrapper.addEventListener('touchstart', onPluck);
+      tinesWrapper.appendChild(wrapper);
+    });
+    document.getElementById('presetButtons').addEventListener('click', (e) => {
+      const btn = e.target.closest('.preset-btn'); if (!btn) return;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+      const targetIndices = chords[btn.dataset.chord];
+      targetIndices.forEach((idx, delay) => { setTimeout(() => { const tine = tinesData.find(t => t.index === idx); if (tine) triggerTine(tine); }, delay * 45); });
+    });
+    window.addEventListener('keydown', (e) => { const match = tinesData.find(t => t.key === e.key); if (match) triggerTine(match); });
+  </script>
+</body>
+</html>
